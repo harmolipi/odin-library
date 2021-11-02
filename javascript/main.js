@@ -8,12 +8,15 @@ const toggleFormButton = document.querySelector('#toggle-form');
 const submitBook = document.querySelector('#submit-book');
 
 let myLibrary = [];
+let removeButtons = document.querySelectorAll('.remove-button');
+let readButtons = document.querySelectorAll('.read-button');
 
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.index = '';
   this.info = function() {
     readStatus = (this.read) ? "read" : "not read yet";
     return title + ' by ' + author + ', ' + pages + ' pages, ' + readStatus;
@@ -24,17 +27,29 @@ function addBookToLibrary(book) {
   myLibrary.push(book);
 }
 
-function addBookToDisplay(book) {
-  let bookItem = document.createElement('li');
-  bookItem.textContent = book.info();
-  bookList.appendChild(bookItem);
+function createReadButton(book) {
+  let readButton = document.createElement('button');
+  readButton.innerText = 'Read';
+  readButton.className = 'read-button';
+  readButton.dataset.index = book.index;
+  return readButton;
 }
 
-function updateBookDisplay(books) {
-  bookList.innerHTML = '';
-  books.forEach(book => {
-    addBookToDisplay(book);
-  });
+function createRemoveButton(book) {
+  let removeButton = document.createElement('button');
+  removeButton.innerText = 'Remove';
+  removeButton.className = 'remove-button';
+  removeButton.dataset.index = book.index;
+  return removeButton;
+}
+
+function addBookToDisplay(book) {
+  let bookItem = document.createElement('li');
+  bookItem.innerText = book.info();
+  bookItem.appendChild(createReadButton(book));
+  bookItem.appendChild(createRemoveButton(book));
+  bookItem.dataset.index = book.index;
+  bookList.appendChild(bookItem);
 }
 
 function toggleForm() {
@@ -46,6 +61,42 @@ function clearForm() {
   inputAuthor.value = '';
   inputPages.value = '';
   inputRead.checked = false;
+}
+
+function toggleRead(book) {
+  book.read = !book.read;
+}
+
+function setReadButtons() {
+  readButtons = document.querySelectorAll('.read-button');
+  readButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      let index = e.target.dataset.index;
+      toggleRead(myLibrary[index]);
+      updateBookDisplay(myLibrary);
+    });
+  });
+}
+
+function setRemoveButtons() {
+  removeButtons = document.querySelectorAll('.remove-button');
+  removeButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      let index = e.target.dataset.index;
+      myLibrary.splice(index, 1);
+      updateBookDisplay(myLibrary);
+    });
+  });
+}
+
+function updateBookDisplay(books) {
+  bookList.innerHTML = '';
+  books.forEach(book => {
+    book.index = myLibrary.indexOf(book);
+    addBookToDisplay(book);
+  });
+  setReadButtons();
+  setRemoveButtons();
 }
 
 toggleFormButton.addEventListener('click', toggleForm);
@@ -67,6 +118,4 @@ addBookToLibrary(theHobbit);
 addBookToLibrary(theAdventuresOfTomSawyer);
 addBookToLibrary(theFellowshipOfTheRing);
 
-console.log(myLibrary);
-
-myLibrary.forEach(addBookToDisplay);
+updateBookDisplay(myLibrary);
