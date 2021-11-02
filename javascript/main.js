@@ -7,9 +7,12 @@ const inputRead = document.querySelector('#read');
 const toggleFormButton = document.querySelector('#toggle-form');
 const submitBook = document.querySelector('#submit-book');
 
-let myLibrary = [];
 let removeButtons = document.querySelectorAll('.remove-button');
 let readButtons = document.querySelectorAll('.read-button');
+let myLibrary = [];
+
+loadFromLocalStorage();
+loadDefaultBooks();
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -89,6 +92,29 @@ function setRemoveButtons() {
   });
 }
 
+function saveToLocalStorage(books) {
+  localStorage.setItem('myLibrary', JSON.stringify(books));
+}
+
+function loadFromLocalStorage() {
+  let loadedLibrary = JSON.parse(localStorage.getItem('myLibrary'));
+  loadedLibrary.forEach(parsedBook => {
+    let book = new Book(parsedBook.title, parsedBook.author, parsedBook.pages, parsedBook.read);
+    addBookToLibrary(book);
+  });
+}
+
+function loadDefaultBooks() {
+  if(myLibrary.length === 0) {
+    let theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, true);
+    let theAdventuresOfTomSawyer = new Book('The Adventures of Tom Sawyer', 'Mark Twain', 200, true);
+    let theFellowshipOfTheRing = new Book('The Fellowship of the Ring', 'J.R.R. Tolkien', 645, false)
+    addBookToLibrary(theHobbit);
+    addBookToLibrary(theAdventuresOfTomSawyer);
+    addBookToLibrary(theFellowshipOfTheRing);
+  }
+}
+
 function updateBookDisplay(books) {
   bookList.innerHTML = '';
   books.forEach(book => {
@@ -97,6 +123,7 @@ function updateBookDisplay(books) {
   });
   setReadButtons();
   setRemoveButtons();
+  saveToLocalStorage(books);
 }
 
 toggleFormButton.addEventListener('click', toggleForm);
@@ -109,13 +136,5 @@ submitBook.addEventListener('click', function(e) {
   toggleForm();
   clearForm();
 });
-
-let theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, true);
-let theAdventuresOfTomSawyer = new Book('The Adventures of Tom Sawyer', 'Mark Twain', 200, true);
-let theFellowshipOfTheRing = new Book('The Fellowship of the Ring', 'J.R.R. Tolkien', 645, false)
-
-addBookToLibrary(theHobbit);
-addBookToLibrary(theAdventuresOfTomSawyer);
-addBookToLibrary(theFellowshipOfTheRing);
 
 updateBookDisplay(myLibrary);
