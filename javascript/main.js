@@ -97,11 +97,13 @@ function saveToLocalStorage(books) {
 }
 
 function loadFromLocalStorage() {
-  let loadedLibrary = JSON.parse(localStorage.getItem('myLibrary'));
-  loadedLibrary.forEach(parsedBook => {
-    let book = new Book(parsedBook.title, parsedBook.author, parsedBook.pages, parsedBook.read);
-    addBookToLibrary(book);
-  });
+  if(localStorage.getItem('myLibrary')) {
+    let loadedLibrary = JSON.parse(localStorage.getItem('myLibrary'));
+    loadedLibrary.forEach(parsedBook => {
+      let book = new Book(parsedBook.title, parsedBook.author, parsedBook.pages, parsedBook.read);
+      addBookToLibrary(book);
+    });
+  }
 }
 
 function loadDefaultBooks() {
