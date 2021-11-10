@@ -15,6 +15,10 @@ There was an optional step of the project, which was to save the list of books t
 
 It's also worth mentioning that since my focus was on the Javascript functionality of this practice project, I didn't put any effort into styling it at all. I did add the classless CSS framework, [Water.css](https://watercss.kognise.dev/), to make it look slightly less basic, at least.
 
+### Mini part 2
+
+Returned to this project after [learning about classes](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/javascript/lessons/classes) in order to refactor my Book objects to be created with a class, rather than a constructor function.
+
 God bless.
 
 -Niko Birbilis
