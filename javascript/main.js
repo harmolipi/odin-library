@@ -7,24 +7,27 @@ const inputRead = document.querySelector('#read');
 const toggleFormButton = document.querySelector('#toggle-form');
 const submitBook = document.querySelector('#submit-book');
 
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.index = '';
+  }
+
+  info() {
+    const readStatus = (this.read) ? 'read' : 'not read yet';
+    return this.title + ' by ' + this.author + ', ' + this.pages + ' pages, ' + readStatus;
+  }
+}
+
 let removeButtons = document.querySelectorAll('.remove-button');
 let readButtons = document.querySelectorAll('.read-button');
 let myLibrary = [];
 
 loadFromLocalStorage();
 loadDefaultBooks();
-
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.index = '';
-  this.info = function() {
-    readStatus = (this.read) ? "read" : "not read yet";
-    return title + ' by ' + author + ', ' + pages + ' pages, ' + readStatus;
-  }
-}
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
