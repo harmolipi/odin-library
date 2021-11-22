@@ -6,3 +6,7 @@ button {
 .hidden {
   display: none;
 }
+
+input:invalid {
+  border: solid red;
+}
