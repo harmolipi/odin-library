@@ -1,4 +1,5 @@
 # Library
+
 Created as part of [The Odin Project](https://www.theodinproject.com) curriculum.
 
 View on [Github](https://github.com/harmolipi/odin-library).
@@ -18,6 +19,10 @@ It's also worth mentioning that since my focus was on the Javascript functionali
 ### Mini part 2
 
 Returned to this project after [learning about classes](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/javascript/lessons/classes) in order to refactor my Book objects to be created with a class, rather than a constructor function.
+
+### Mini part 3
+
+Returned to this project again in the [Forms](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/javascript/lessons/forms-javascript) lesson. After learning about form validations, I had the warm-up assignment of returning to this one and simply adding validations, requiring values in all fields before accepting a submission.
 
 God bless.
 
